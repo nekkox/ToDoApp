@@ -1,10 +1,11 @@
 <script setup>
-
+import First from "./components/First.vue"
 
 </script>
 
 <template>
-
+  <p>hello</p>
+<First />
 
 
 </template>
