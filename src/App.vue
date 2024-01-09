@@ -1,11 +1,18 @@
 <script setup>
-import First from "./components/First.vue"
+import ToDoService from '@/services/todo'
+import { ref } from 'vue';
+const item = ref("")
+function getNewItem(){
+  item.value = ToDoService.getDefaultItem()
+  console.log(item);
+}
 
 </script>
 
 <template>
   <p>hello</p>
-<First />
+  <button @click="getNewItem">Get new item</button>
+
 
 
 </template>
