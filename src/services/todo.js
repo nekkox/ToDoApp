@@ -4,10 +4,14 @@ const service = {
     getDefaultItem(){
         return {
             id: new Date().valueOf(),
-            text: "",
+            text: "zzz",
             status: "Not_started"
             
         }
+    },
+
+    makeCopy(item){
+        return JSON.parse(JSON.stringify(item))
     }
 
 }
