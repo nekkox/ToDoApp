@@ -1,19 +1,15 @@
 <script setup>
-import ToDoService from '@/services/todo'
-import { ref } from 'vue';
-const item = ref("")
-function getNewItem(){
-  item.value = ToDoService.getDefaultItem()
-  console.log(item);
-}
+import ToDoProject from '@/components/ToDoProject.vue'
+import Header from '@/components/Header.vue'
 
 </script>
 
 <template>
-  <p>hello</p>
-  <button @click="getNewItem">Get new item</button>
 
-
+<Header></Header>
+<main>
+<ToDoProject></ToDoProject>
+</main>
 
 </template>
 
