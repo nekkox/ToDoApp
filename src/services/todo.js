@@ -4,7 +4,16 @@ const service = {
     getDefaultItem(){
         return {
             id: new Date().valueOf(),
-            text: "zzz",
+            text: "",
+            status: "Not_started"
+            
+        }
+    },
+
+    getNewItem(value){
+        return {
+            id: new Date().valueOf(),
+            text: value,
             status: "Not_started"
             
         }
@@ -12,7 +21,15 @@ const service = {
 
     makeCopy(item){
         return JSON.parse(JSON.stringify(item))
-    }
+    },
+
+    getStatusList() {
+        return [
+            { id: "not_started", label: "Not started" },
+            { id: "in_progress", label: "In progress" },
+            { id: "completed", label: "Completed" }
+        ]
+    },
 
 }
 
