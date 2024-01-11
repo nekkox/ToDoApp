@@ -86,7 +86,8 @@ function toggleStatus(item) {
 
 <template>
     <ToDoSummary></ToDoSummary>
-    <ToDoFilter></ToDoFilter>
+    <h3>FILTER: {{ _filter }}</h3>
+    <ToDoFilter v-model="_filter"></ToDoFilter>
 
     <ToDoList>
         <button @click="showModal(true)" class="w3-button w3-blue w3-round-xxlarge">
