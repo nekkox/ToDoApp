@@ -5,18 +5,18 @@ const filterModel = defineModel();
 const _value = ref("")
 
 onMounted(()=>{
-    _value.text = filterModel
+   // _value.text = filterModel
 })
 
 function publishValue(){
-    filterModel.value = _value.value
+   // filterModel.value = _value.value
     console.log("done");
-    console.log(_value);
     console.log(filterModel);
 }
 
 function clear(){
-    _value.value="";
+   // _value.value="";
+   filterModel.value=""
     publishValue()
 }
 </script>
@@ -24,9 +24,9 @@ function clear(){
 <template>
      <div >
         <input  type="text" 
-                v-model="_value"
-                @keyup="publishValue()"
+                v-model="filterModel"
                 placeholder="Enter filter text here..."
+                @keyup.enter="publishValue()"
                 >
         <button @click="clear()">
             <i class="fas fa-fw fa-times"></i>

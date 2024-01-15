@@ -4,7 +4,8 @@ import { inject, reactive, ref } from 'vue';
 import TodoItemForm from '@/components/TodoItemForm.vue'
 import ToDoFilter from '@/components/ToDoFilter.vue'
 import ToDoList from '@/components/ToDoList.vue'
-import ToDoSummary from '@/components/ToDoSummary.vue'
+//import ToDoSummary from '@/components/ToDoSummary.vue'
+import Summary from '@/components/Summary.vue'
 
 const _item = ref(ToDoService.getDefaultItem())
 const _items = ref([])
@@ -85,8 +86,9 @@ function toggleStatus(item) {
 </script>
 
 <template>
-    <ToDoSummary></ToDoSummary>
+    <Summary :items="_items"/>
     <h3>FILTER: {{ _filter }}</h3>
+    {{ console.log(_filter) }}
     <ToDoFilter v-model="_filter"></ToDoFilter>
 
     <ToDoList>
@@ -102,6 +104,7 @@ function toggleStatus(item) {
     <Modal name="New_or_Edit_Item" title="To Do Item">
         <TodoItemForm v-model="_item"></TodoItemForm>
     </Modal>
+
     <Modal name="deleteItem" title="Delete To-Do Item">
         <p>
             This action will delete the item:<br>

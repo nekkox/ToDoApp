@@ -5,7 +5,7 @@ const service = {
         return {
             id: new Date().valueOf(),
             text: "",
-            status: "Not_started"
+            status: "not_started"
             
         }
     },
@@ -14,7 +14,7 @@ const service = {
         return {
             id: new Date().valueOf(),
             text: value,
-            status: "Not_started"
+            status: "not_started"
             
         }
     },
