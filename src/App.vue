@@ -5,31 +5,20 @@ import Header from '@/components/Header.vue'
 </script>
 
 <template>
-
-<Header></Header>
-<main>
-<ToDoProject></ToDoProject>
-</main>
-
+  <div class="app">
+    <Header></Header>
+    <main class="w3-container">
+      <ToDoProject></ToDoProject>
+    </main>
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.app {
+  width: 100vw;
+  min-height: 100vh;
+  padding: 0;
+  background-color: #333333;
+  color: #EBEBEB;
 }
 </style>

@@ -46,7 +46,8 @@ function changeComponent($event, dynamicComponent) {
 
         <div>
             <keep-alive>
-                <component :is=components[dynamicComponent] @next="changeComponent($event, dynamicComponent = 'SecondStep');"
+                <component :is=components[dynamicComponent]
+                    @next="changeComponent($event, dynamicComponent = 'SecondStep');"
                     @back="changeComponent($event, dynamicComponent = 'FirstStep')" :props="dynamicProps" />
             </keep-alive>
             {{ console.log(gatheredValues) }}

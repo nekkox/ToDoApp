@@ -4,39 +4,39 @@ import { inject, reactive, ref } from 'vue';
 import TodoItemForm from '@/components/TodoItemForm.vue'
 import ToDoFilter from '@/components/ToDoFilter.vue'
 import ToDoList from '@/components/ToDoList.vue'
-//import ToDoSummary from '@/components/ToDoSummary.vue'
 import Summary from '@/components/Summary.vue'
 
 const _item = ref(ToDoService.getDefaultItem())
 const _items = ref([])
 const $modal = inject("$modals")
 const _filter = ref("")
-
+const emptyValue = ref(true)
 
 //Show a modal to create new item or edit existed one
 function showModal(new_item = true, itemForEdit = {}) {
+
     if (new_item) {
         //Prepare a new item
         _item.value = ToDoService.getDefaultItem()
-        console.log("New Item to be added ");
     } else {
         // Make a copy of the item for editing
         _item.value = ToDoService.makeCopy(itemForEdit);
-        console.log("Item to edit: ");
-        console.log(_item.value);
+
     }
     //Open "New_or_Edit_Item" modal;
     $modal.show("New_or_Edit_Item").then(() => {
-        //If new_item then add it to _items
+        //If new_item then add it to _items array
         if (new_item) {
-
-            _items.value.push(_item.value)
-            console.log(_item.value.text);
-            console.log(_items);
-
+            if (_item.value.text.trim() != "") {
+                emptyValue.value = false;
+                _items.value.push(_item.value)
+                // emptyValue.value = true;
+            } else {
+                emptyValue.value = true;
+                alert("error")
+            }
         } else {
             //Replace item
-            console.log("Edit existing item");
             let index = getIndex(itemForEdit)
             if (index >= 0) {
                 _items.value[index] = _item.value
@@ -47,6 +47,7 @@ function showModal(new_item = true, itemForEdit = {}) {
         }
     }, () => {
         console.log("Adding new item or editing canceled");
+        emptyValue.value = true;
     }
     )
 }
@@ -60,8 +61,6 @@ function getIndex(item) {
         console.log("No such index");
         return false
     } else {
-        console.log("Found index: " + _items.value[index].text);
-        console.log(index);
         return index
     }
 }
@@ -71,13 +70,11 @@ function deleteItem(item) {
     $modal.show("deleteItem").then(() => {
         let index = getIndex(item);
         if (index >= 0) {
-
             _items.value.splice(index, 1)
-
-
         }
     }, () => { console.log("Deleting item cancelled"); })
 }
+
 
 function toggleStatus(item) {
     item.status = ToDoService.toggleStatus(item.status)
@@ -86,32 +83,54 @@ function toggleStatus(item) {
 </script>
 
 <template>
-    <Summary :items="_items"/>
-    <h3>FILTER: {{ _filter }}</h3>
-    {{ console.log(_filter) }}
-    <ToDoFilter v-model="_filter"></ToDoFilter>
+    <div class="project-container">
 
-    <ToDoList>
-        <button @click="showModal(true)" class="w3-button w3-blue w3-round-xxlarge">
-            <i class="fa-solid fa-square-plus"></i>
-            New item
-        </button>
-    </ToDoList>
+        <!-- Summary -->
+        <Summary :items="_items" />
 
+        <h3>Search: {{ _filter }}</h3>
+        {{ console.log(_filter) }}
 
-    <br><br><br><br>
-    <hr>
-    <Modal name="New_or_Edit_Item" title="To Do Item">
-        <TodoItemForm v-model="_item"></TodoItemForm>
-    </Modal>
+        <!-- Filter bar -->
+        <div class="w3-margin-bottom">
+            <ToDoFilter v-model="_filter"></ToDoFilter>
+        </div>
 
-    <Modal name="deleteItem" title="Delete To-Do Item">
-        <p>
-            This action will delete the item:<br>
-            <strong>{{ _item.text }}</strong>
-        </p>
-        <p>
-            This action cannot be undone.
-        </p>
-    </Modal>
+        <!-- Todo list -->
+        <ToDoList v-model="_items" :filter="_filter" @toggle="toggleStatus" @edit="showModal(false, $event)"
+            @delete="deleteItem">
+            <button @click="showModal(true)" class="w3-button w3-blue w3-round-xxlarge">
+                <i class="fa-solid fa-square-plus"></i>
+                New item
+            </button>
+        </ToDoList>
+
+        <!-- Modal for New item or for Edit -->
+        <Modal name="New_or_Edit_Item" title="To Do Item" :disabled="emptyValue">
+            <template v-slot:newItem>
+                <TodoItemForm v-model="_item" :emptyValue="emptyValue" @notEmpty="emptyValue = false"
+                    @empty="emptyValue = true">
+                </TodoItemForm>
+            </template>
+        </Modal>
+
+        <!-- Modal for delete item -->
+        <Modal name="deleteItem" title="Delete To-Do Item">
+            <p>
+                This action will delete the item:<br>
+                <strong>{{ _item.text }}</strong>
+            </p>
+            <p class="w3-text-red w3-pale-red w3-round-medium">
+                This action cannot be undone.
+            </p>
+        </Modal>
+    </div>
 </template>
+
+<style scoped>
+.project-container {
+    max-width: 56rem;
+    padding: 1rem;
+    margin: 0 auto;
+}
+</style>

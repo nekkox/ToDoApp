@@ -76,10 +76,10 @@ const options = ref([{
 ])
 
 const parentMessage = ref("")
-function updateParentMessage(newMessage){
+function updateParentMessage(newMessage) {
     console.log(newMessage);
     console.log(event);
-    parentMessage.value=newMessage
+    parentMessage.value = newMessage
 }
 
 const helloMsg = ref("x")
@@ -116,9 +116,6 @@ const helloMsg = ref("x")
 
     <CustomSelect :selected="selected" :options="options" />
 
-    <h2 >The Message: {{ parentMessage  }}</h2>
+    <h2>The Message: {{ parentMessage }}</h2>
     <Message @send="console.log($event)"></Message>
-
-   
-
 </template>

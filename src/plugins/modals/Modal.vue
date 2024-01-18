@@ -4,7 +4,9 @@ import { computed, inject } from 'vue';
 
 const $props = defineProps({
     name: { type: String, default: "" },
-    title: { type: String, default: "Modal Dialog" }
+    title: { type: String, default: "Modal Dialog" },
+    disabled: { type: Boolean },
+   
 })
 
 const $modals = inject("$modals")
@@ -28,13 +30,14 @@ function closeModal(accept = false) {
                 {{$props.title}}
             </header>
             <main class="w3-white w3-padding">
+                <slot name="newItem"></slot>
                 <slot></slot>
             </main>
             <footer class="w3-right-align w3-blue w3-padding">
-                <button class="w3-button " @click="closeModal(true)">
+                <button class="w3-button" :disabled="$props.disabled" @click="closeModal(true)">
                     Accept
                 </button>
-                <button class="w3-button " @click="closeModal(false)">
+                <button class="w3-button" @click="closeModal(false)">
                     Cancel
                 </button>
             </footer>

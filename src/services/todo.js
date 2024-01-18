@@ -31,6 +31,24 @@ const service = {
         ]
     },
 
+    toggleStatus(status){
+
+        switch (status) {
+            case "completed":
+                return "not_started"
+                break;
+                case "not_started":
+                return "in_progress"
+                break;
+                case "in_progress":
+                return "completed"
+                break;
+        
+            default:
+                break;
+        }
+    }
+
 }
 
 export default service
