@@ -1,11 +1,27 @@
 <script setup>
 import ToDoService from '@/services/todo'
-import { inject, reactive, ref } from 'vue';
+import { inject, reactive, ref, watch, onMounted } from 'vue';
 import TodoItemForm from '@/components/TodoItemForm.vue'
 import ToDoFilter from '@/components/ToDoFilter.vue'
 import ToDoList from '@/components/ToDoList.vue'
 import Summary from '@/components/Summary.vue'
 import Promise from '@/components/otherComponents/Promise.vue'
+import { useRouter } from "vue-router"
+
+//url params ('id')
+const $params = defineProps(['id'])
+const $router = useRouter()
+const _project_name=ref("")
+
+onMounted(LoadProject)
+
+//if /project/{id} changes, LoadProject() function is runned
+watch(()=>$params.id, LoadProject)
+
+function LoadProject(){console.log("loaded " + $params.id)
+ToDoService.createToDoProject("dogs")
+}
+
 
 const _item = ref(ToDoService.getDefaultItem())
 const _items = ref([])

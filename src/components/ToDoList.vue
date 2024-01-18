@@ -1,6 +1,8 @@
 <script setup>
-import { computed } from 'vue';
 
+//Conponent shows all items or only the filtered ones. Each item has its own status that can be toggled, 
+//button EDIT and DELETE that emits events back to parent component when clicked
+import { computed } from 'vue';
 const itemsModel = defineModel()
 const props = defineProps(['filter'])
 const emit = defineEmits(['toggle', 'edit', 'delete'])
