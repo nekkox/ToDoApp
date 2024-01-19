@@ -1,3 +1,5 @@
+
+import { mergeProps } from 'vue';
 <script setup>
 import ToDoService from '@/services/todo'
 import { inject, reactive, ref, watch, onMounted } from 'vue';
@@ -13,14 +15,12 @@ const $params = defineProps(['id'])
 const $router = useRouter()
 const _project_name=ref("")
 
-onMounted(LoadProject)
+onMounted(loadProject)
 
 //if /project/{id} changes, LoadProject() function is runned
-watch(()=>$params.id, LoadProject)
+watch(()=>$params.id, loadProject)
 
-function LoadProject(){console.log("loaded " + $params.id)
-ToDoService.createToDoProject("dogs")
-}
+
 
 
 const _item = ref(ToDoService.getDefaultItem())
@@ -28,6 +28,7 @@ const _items = ref([])
 const $modal = inject("$modals")
 const _filter = ref("")
 const emptyValue = ref(true)
+
 
 //Show a modal to create new item or edit existed one
 function showModal(new_item = true, itemForEdit = {}) {
@@ -95,6 +96,23 @@ function deleteItem(item) {
 
 function toggleStatus(item) {
     item.status = ToDoService.toggleStatus(item.status)
+}
+
+
+function loadProject(){
+    _project_name.value = ToDoService.getProjectName($params.id)
+    _items.value=ToDoService.loadProject($params.id)
+    if( !_items.value){
+        console.log('null');
+        _items.value = []
+    }
+    console.log("project loaded");
+    console.log(_items.value);
+}
+
+function saveProject(){
+    ToDoService.saveProject($params.Id, _items.value )
+    console.log("saved");
 }
 
 </script>

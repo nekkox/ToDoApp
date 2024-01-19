@@ -97,6 +97,7 @@ const service = {
         return p.id==project_id
     })
     if(project){
+        console.log("project found: " + project.name);
         return project.name
     }else{
         return ""
