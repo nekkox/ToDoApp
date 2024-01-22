@@ -1,12 +1,11 @@
 
-import ModalVue from '@/plugins/modals/Modal.vue';
-
 import { inject } from 'vue';
 <script setup>
 import { inject, ref } from "vue"
 import eventBus from '@/services/eventBus'
 import ToDoService from "@/services/todo";
 //import ToDoService from '@/services/todo'
+import Canvas from '@/components/canva.vue'
 
 const $modal = inject("$modals")
 const _projectName = ref("")
@@ -55,7 +54,9 @@ function newProject() {
             <input type="text" class="w3-input w3-border" placeholder="Enter project name..." v-model="_projectName">
         </Modal>
         <p>{{ _projectName }}</p>
+      
     </div>
+ 
 </template>
 
 <style scoped>

@@ -13,12 +13,12 @@ import { useRouter } from "vue-router"
 //url params ('id')
 const $params = defineProps(['id'])
 const $router = useRouter()
-const _project_name=ref("")
+const _project_name = ref("")
 
 onMounted(loadProject)
 
 //if /project/{id} changes, LoadProject() function is runned
-watch(()=>$params.id, loadProject)
+watch(() => $params.id, loadProject)
 
 
 
@@ -63,6 +63,7 @@ function showModal(new_item = true, itemForEdit = {}) {
                 alert("Error updating the item")
             }
         }
+        saveProject()
     }, () => {
         console.log("Adding new item or editing canceled");
         emptyValue.value = true;
@@ -89,6 +90,7 @@ function deleteItem(item) {
         let index = getIndex(item);
         if (index >= 0) {
             _items.value.splice(index, 1)
+            saveProject()
         }
     }, () => { console.log("Deleting item cancelled"); })
 }
@@ -96,22 +98,23 @@ function deleteItem(item) {
 
 function toggleStatus(item) {
     item.status = ToDoService.toggleStatus(item.status)
+    saveProject()
 }
 
 
-function loadProject(){
+function loadProject() {
     _project_name.value = ToDoService.getProjectName($params.id)
-    _items.value=ToDoService.loadProject($params.id)
-    if( !_items.value){
-        console.log('null');
-        _items.value = []
-    }
-    console.log("project loaded");
-    console.log(_items.value);
+    _items.value = ToDoService.loadProject($params.id)
+    //if (!_items.value) {
+      //  console.log('null');
+      //  _items.value = []
+  //  }
+  //  console.log("project loaded");
+   // console.log(_items.value);
 }
 
-function saveProject(){
-    ToDoService.saveProject($params.Id, _items.value )
+function saveProject() {
+    ToDoService.saveProject($params.id, _items.value)
     console.log("saved");
 }
 
@@ -168,5 +171,6 @@ function saveProject(){
     max-width: 56rem;
     padding: 1rem;
     margin: 0 auto;
+    
 }
 </style>

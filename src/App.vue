@@ -29,7 +29,7 @@ import SideBar from '@/components/Sidebar/Sidebar.vue'
 
 #wrapper {
   display: grid;
-  grid-template-columns: 12rem auto;
+  grid-template-columns: 13rem auto;
   justify-items: stretch;
 }
 </style>

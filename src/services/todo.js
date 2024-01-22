@@ -48,13 +48,14 @@ const service = {
     // Check if the master project list exists in localStorage
     let projects = localStorage.getItem("projects");
 
-    // If it doesn"t exist, we create a default.otherwise, parse the string
+    // If it doesn"t exist, we create a default. Otherwise, parse the string
     if (!projects) {
       projects = { next_id: 0, list: [] };
+      console.log("Main Projects Array Created");
     } else {
       projects = JSON.parse(projects);
     }
-    console.log(projects);
+    
     return projects;
   },
 
@@ -64,7 +65,7 @@ const service = {
   },
 
   createToDoProject(name = "") {
-    let projects = this.loadProjectsMain();
+    let projects = service.loadProjectsMain();
 
      // Prepare the new project
     let project_id = projects.next_id;
@@ -77,7 +78,7 @@ const service = {
     localStorage.setItem(`project.${project_id}`, "[]");
 
     // Save the projects manifest
-    this.saveProjectsMain(projects);
+    service.saveProjectsMain(projects);
   },
 
   loadProject(project_id){
@@ -92,7 +93,7 @@ const service = {
 
   getProjectName(project_id){
     // Retrieve the project from the manifest and return the name
-    let mainProject = this.loadProjectsMain()
+    let mainProject = service.loadProjectsMain()
     let project = mainProject.list.find(p=>{
         return p.id==project_id
     })

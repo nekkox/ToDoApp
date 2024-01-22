@@ -1,16 +1,16 @@
-import { createRouter, createWebHistory } from "vue-router"; //1
-import Landing from "../views/Landing.vue"; //2
+import { createRouter, createWebHistory } from "vue-router"; 
+import Landing from "../views/Landing.vue"; 
 const routes = [
     { path: "/", name: "landing", component: Landing },
     {
       path: "/project/:id",
       name: "project",
-      component: () => import("../views/ToDoProject.vue"), //3
+      component: () => import("../views/ToDoProject.vue"), 
       props: true,
     },
   ],
   router = createRouter({
-    //4
+   
     history: createWebHistory(),
     routes,
     scrollBehavior(to, from, savedPosition) {
