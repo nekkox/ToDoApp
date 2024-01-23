@@ -24,15 +24,15 @@ const _status = computed(() => {
 
 <template>
     <div class="summary-wrapper">
-        <div class="w3-deep-purple w3-padding w3-center">
+        <div class=" p-3 text-center opacity-50 bg-indigo-500 opacity-100 shadow-inner rounded-lg">
             <strong>Pending</strong>
             <h2>{{ _status?.not_started }}</h2>
         </div>
-        <div class="w3-sand w3-padding w3-center">
+        <div class="w3-sand w3-padding w3-center rounded-lg">
             <strong>In progress</strong>
             <h2>{{ _status?.in_progress }}</h2>
         </div>
-        <div class="w3-cyan w3-padding w3-center">
+        <div class="w3-cyan w3-padding w3-center rounded-lg">
             <strong>Completed</strong>
             <h2>{{ _status?.completed }}</h2>
         </div>

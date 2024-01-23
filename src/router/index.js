@@ -1,7 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router"; 
-import Landing from "../views/Landing.vue"; 
+//import Landing from "../views/Landing.vue"; 
 const routes = [
-    { path: "/", name: "landing", component: Landing },
+  //  { path: "/home", name: "landing", component: Landing },
+    {
+      path: "/",
+      name: "landing",
+      component: () => import("../views/Landing.vue"), 
+      props: false,
+    },
     {
       path: "/project/:id",
       name: "project",

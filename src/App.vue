@@ -6,13 +6,15 @@ import SideBar from '@/components/Sidebar/Sidebar.vue'
 </script>
 
 <template>
-  <div class="app">
-    <Header></Header>
+  <div class="app bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black">
+    <Header class="h-10"></Header>
     <div id="wrapper">
-      <SideBar></SideBar>
+      <div class="relative ">
+      <SideBar class="sidebar"></SideBar>
+    </div>
       <main class="w3-container">
         <!---  <ToDoProject></ToDoProject> -->
-        <router-view></router-view>
+        <router-view ></router-view>
       </main>
     </div>
   </div>
@@ -27,6 +29,13 @@ import SideBar from '@/components/Sidebar/Sidebar.vue'
   color: #EBEBEB;
 }
 
+.sidebar{
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: calc(100vh - 40px);
+  max-height: 100vw;
+}
 #wrapper {
   display: grid;
   grid-template-columns: 13rem auto;

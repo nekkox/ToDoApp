@@ -1,5 +1,3 @@
-
-import { mergeProps } from 'vue';
 <script setup>
 import ToDoService from '@/services/todo'
 import { inject, reactive, ref, watch, onMounted } from 'vue';
@@ -8,12 +6,14 @@ import ToDoFilter from '@/components/ToDoFilter.vue'
 import ToDoList from '@/components/ToDoList.vue'
 import Summary from '@/components/Summary.vue'
 import Promise from '@/components/otherComponents/Promise.vue'
-import { useRouter } from "vue-router"
-
+import { useRouter, useRoute } from "vue-router"
+import eventBus from '@/services/eventBus'
+import { store } from '@/services/store'
 //url params ('id')
 const $params = defineProps(['id'])
-const $router = useRouter()
+const $route = useRoute()
 const _project_name = ref("")
+
 
 onMounted(loadProject)
 
@@ -28,6 +28,8 @@ const _items = ref([])
 const $modal = inject("$modals")
 const _filter = ref("")
 const emptyValue = ref(true)
+
+const routeId = ref("")
 
 
 //Show a modal to create new item or edit existed one
@@ -105,33 +107,38 @@ function toggleStatus(item) {
 function loadProject() {
     _project_name.value = ToDoService.getProjectName($params.id)
     _items.value = ToDoService.loadProject($params.id)
-    //if (!_items.value) {
-      //  console.log('null');
-      //  _items.value = []
-  //  }
-  //  console.log("project loaded");
-   // console.log(_items.value);
+    if (!_items.value) {
+       console.log('null');
+        _items.value = []
+    }
+
+    routeId.value = $route.params.id
+    store.routeId = $route.params.id
+    store.currentProjectId = $params.id;
+    eventBus.emit('newRoute', $route.params)
+    console.log("project loaded",_items.value );
 }
 
 function saveProject() {
     ToDoService.saveProject($params.id, _items.value)
     console.log("saved");
 }
-
 </script>
 
 <template>
     <div class="project-container">
 
+<div class="">{{ _project_name }}</div>
+
         <!-- Summary -->
         <Summary :items="_items" />
 
-        <h3>Search: {{ _filter }}</h3>
+        
         {{ console.log(_filter) }}
 
         <!-- Filter bar -->
         <div class="w3-margin-bottom">
-            <ToDoFilter v-model="_filter"></ToDoFilter>
+            <ToDoFilter class="mt-20"  v-model="_filter"></ToDoFilter>
         </div>
 
         <!-- Todo list -->
