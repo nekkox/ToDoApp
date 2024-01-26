@@ -4,6 +4,12 @@ const routes = [
   //  { path: "/home", name: "landing", component: Landing },
     {
       path: "/",
+      name: "home",
+      component: () => import("../views/home.vue"), 
+      props: false,
+    },
+    {
+      path: "/todo",
       name: "landing",
       component: () => import("../views/Landing.vue"), 
       props: false,

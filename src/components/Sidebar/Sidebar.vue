@@ -70,7 +70,8 @@ function go(id) {
           class="w-48 text-sm font-medium text-gray-900 bg-white border-x border-zinc-700 rounded-b-lg dark:bg-gray-700 dark:border-zinc-700 dark:text-white">
 
         <!--  <router-link :to="{ name: 'landing' }" class="m-4 text-center" active-class="home"> New </router-link> -->
-      <PrettyLink :to="{ name: 'landing' }"> Home </PrettyLink>
+      <PrettyLink :to="{ name: 'home' }" class="mt-9"> Home </PrettyLink>
+      <PrettyLink :to="{ name: 'landing' }"> ToDo </PrettyLink>
 
           <div v-for="project in _projects" :key="project.id" class="pt-2 pb-2 mt-2 mb-2 ">
                <PrettyLink :to="{ name: 'project', params: { id: project.id } }" :items="['a', 'b', 'c']">

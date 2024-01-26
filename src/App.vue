@@ -24,7 +24,7 @@ import SideBar2 from '@/components/Sidebar/SideBar2.vue'
      
     </div>
   </div>
-  <button>vvv</button>
+
 </template>
 
 <style scoped>
