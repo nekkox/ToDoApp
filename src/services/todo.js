@@ -103,6 +103,20 @@ const service = {
     }else{
         return ""
     }
+  },
+
+  getProjectId(project_name){
+    // Retrieve the project from the manifest and return the id
+    let mainProject = service.loadProjectsMain()
+    let project = mainProject.list.find(p=>{
+        return p.name==project_name
+    })
+    if(project){
+        console.log("project found: " + project.id);
+        return project.id
+    }else{
+        return ""
+    }
   }
 
  

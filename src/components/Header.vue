@@ -13,7 +13,7 @@
 header{
  
   background: #0f1522;
-  box-shadow: 0px 1px 2px rgba(0,255,255,0.5), 
+  box-shadow: 0px 1px 2px hwb(180 0% 0% / 0.5), 
               0px 2px 4px rgba(0,255,255,0.5), 
               0px 4px 8px rgba(0,255,255,0.5), 
               0px 8px 16px rgba(0,255,255,0.5);

@@ -1,9 +1,13 @@
 <script setup>
-import { inject, ref } from "vue"
+import { inject, reactive, ref } from "vue"
 import eventBus from '@/services/eventBus'
 import ToDoService from "@/services/todo";
 import { useRouter } from 'vue-router'
 
+
+
+// Initialization for ES Users
+const slotP = ref()
 const $modal = inject("$modals")
 const _projectName = ref("")
 const $router = useRouter()
@@ -14,12 +18,15 @@ function newProject() {
         .show("NewProject")
         .then(() => {
             //max 10 signs
-            if (_projectName.value != '' && _projectName.value.length <=10) {
+            if (_projectName.value != '' && _projectName.value.length <= 10) {
                 ToDoService.createToDoProject(_projectName.value)
                 eventBus.emit("UpdateProjects")
+                //get the last created project
                 console.log("New Project Created")
-            }
+                let createdProjectId = ToDoService.getProjectId(_projectName.value)
+                go(createdProjectId)
 
+            }
         },
             () => {
                 return console.log("Creating new project cancelled")
@@ -27,10 +34,9 @@ function newProject() {
 }
 
 function go(id) {
-      // Programmatically navigate using router.push
-      $router.push({ name: 'project', params: { id: id } });
-    }
-
+    // Programmatically navigate using router.push
+    $router.push({ name: 'project', params: { id: id } });
+}
 </script>
 
 <template>
@@ -47,7 +53,6 @@ function go(id) {
             This route was defined as static in our router.
         </p>
 
-
         <button @click="newProject()"
             class="mt-6 relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
             <span
@@ -62,12 +67,11 @@ function go(id) {
             <input type="text" class="w3-input w3-border" placeholder="Enter project name..." v-model="_projectName">
         </Modal>
         <p>{{ _projectName }}</p>
-        
-        <button @click="go(2)" class="button" data-text="Awesome">
-          <span class="actual-text">BBB</span>
-        <span aria-hidden="true" class="front-text">BBB</span>
-     </button>
 
+        <button @click="go(2)" class="button" data-text="Awesome">
+            <span class="actual-text">BBB</span>
+            <span aria-hidden="true" class="front-text">BBB</span>
+        </button>
     </div>
 </template>
 
@@ -144,62 +148,54 @@ function go(id) {
     padding: 30px;
 }
 
-
-
-
-
-
-
-
 .button {
-  position: relative;
-  border: none;
-  background: transparent;
-  --stroke-color: #ffffff7c;
-  --ani-color: rgba(95, 3, 244, 0);
-  --color-gar: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
-  letter-spacing: 3px;
-  font-size: 2em;
-  font-family: "Arial";
-  text-transform: uppercase;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--stroke-color);
-  cursor: pointer;
+    position: relative;
+    border: none;
+    background: transparent;
+    --stroke-color: #ffffff7c;
+    --ani-color: rgba(95, 3, 244, 0);
+    --color-gar: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+    letter-spacing: 3px;
+    font-size: 2em;
+    font-family: "Arial";
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--stroke-color);
+    cursor: pointer;
 }
 
 .front-text {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0%;
-  background: var(--color-gar);
-  -webkit-background-clip: text;
-  background-clip: text;
-  background-size: 200%;
-  overflow: hidden;
-  transition: all 1s;
-  animation: 8s ani infinite;
-  border-bottom: 2px solid transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    background: var(--color-gar);
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-size: 200%;
+    overflow: hidden;
+    transition: all 1s;
+    animation: 8s ani infinite;
+    border-bottom: 2px solid transparent;
 }
 
 .button:hover .front-text {
-  width: 100%;
-  border-bottom: 2px solid #03a9f4;
-  -webkit-text-stroke: 1px var(--ani-color);
+    width: 100%;
+    border-bottom: 2px solid #03a9f4;
+    -webkit-text-stroke: 1px var(--ani-color);
 }
 
 @keyframes ani {
-  0% {
-    background-position: 0%;
-  }
+    0% {
+        background-position: 0%;
+    }
 
-  50% {
-    background-position: 400%;
-  }
+    50% {
+        background-position: 400%;
+    }
 
-  100% {
-    background-position: 0%;
-  }
+    100% {
+        background-position: 0%;
+    }
 }
-
 </style>
