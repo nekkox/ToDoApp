@@ -117,6 +117,29 @@ const service = {
     }else{
         return ""
     }
+  },
+
+  deleteProject(project_id){
+        // Retrieve the manifes, and the index of the project in the list
+        let mainProject=service.loadProjectsMain()
+        console.log(mainProject);
+        let project_index=mainProject.list.findIndex(p=>{
+                return p.id==project_id
+            })
+
+        // If the project is found...
+        if(project_index >-1 ){
+        
+            // Remove project from the manifest
+            mainProject.list.splice(project_index, 1)
+            service.saveProjectsMain(mainProject)
+
+            // Delete localStorage
+            localStorage.removeItem(`project.${project_id}`)
+            
+        }
+    
+
   }
 
  

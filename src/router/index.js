@@ -15,11 +15,18 @@ const routes = [
       props: false,
     },
     {
+      path: "/alltodo",
+      name: "alltodo",
+      component: () => import("../views/Alltodo.vue"), 
+      props: false,
+    },
+    {
       path: "/project/:id",
       name: "project",
       component: () => import("../views/ToDoProject.vue"), 
       props: true,
     },
+    
   ],
   router = createRouter({
    

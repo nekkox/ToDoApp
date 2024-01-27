@@ -19,12 +19,6 @@ console.log($link);
 console.log(RouterLink);
 console.log($router);
 
-watch(
-     () => store.routeId, (toParams, previousParams) => {
-          console.log("Watcher:", toParams, previousParams);
-          // activeProjectId.value = isActive(store.routeId)
-     }
-)
 
 UpdateProjects();
 
@@ -71,16 +65,15 @@ function go(id) {
 
         <!--  <router-link :to="{ name: 'landing' }" class="m-4 text-center" active-class="home"> New </router-link> -->
       <PrettyLink :to="{ name: 'home' }" class="mt-9"> Home </PrettyLink>
-      <PrettyLink :to="{ name: 'landing' }"> ToDo </PrettyLink>
+      <PrettyLink :to="{ name: 'landing' }" style="font-size:0.8em"> New todo </PrettyLink>
+      <PrettyLink :to="{ name: 'alltodo' }" class="mt-7" style="font-size:0.7em"> All todo's </PrettyLink>
 
           <div v-for="project in _projects" :key="project.id" class="pt-2 pb-2 mt-2 mb-2 ">
                <PrettyLink :to="{ name: 'project', params: { id: project.id } }" :items="['a', 'b', 'c']">
                     {{ project.name }}
-
                     <template #link-list="SlotProps">
                          {{ SlotProps.item }}
                     </template>
-
                </PrettyLink>
           </div>
 

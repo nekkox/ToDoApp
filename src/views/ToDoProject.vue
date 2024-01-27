@@ -1,11 +1,10 @@
 <script setup>
 import ToDoService from '@/services/todo'
-import { inject, reactive, ref, watch, onMounted } from 'vue';
+import { inject, ref, watch, onMounted } from 'vue';
 import TodoItemForm from '@/components/TodoItemForm.vue'
 import ToDoFilter from '@/components/ToDoFilter.vue'
 import ToDoList from '@/components/ToDoList.vue'
 import Summary from '@/components/Summary.vue'
-import Promise from '@/components/otherComponents/Promise.vue'
 import { useRouter, useRoute } from "vue-router"
 import eventBus from '@/services/eventBus'
 import { store } from '@/services/store'
@@ -14,13 +13,11 @@ const $params = defineProps(['id'])
 const $route = useRoute()
 const _project_name = ref("")
 
-
+//When component is first time mounted
 onMounted(loadProject)
 
 //if /project/{id} changes, LoadProject() function is runned
 watch(() => $params.id, loadProject)
-
-
 
 
 const _item = ref(ToDoService.getDefaultItem())
@@ -28,8 +25,8 @@ const _items = ref([])
 const $modal = inject("$modals")
 const _filter = ref("")
 const emptyValue = ref(true)
-
 const routeId = ref("")
+const $router = useRouter()
 
 
 //Show a modal to create new item or edit existed one
@@ -108,7 +105,7 @@ function loadProject() {
     _project_name.value = ToDoService.getProjectName($params.id)
     _items.value = ToDoService.loadProject($params.id)
     if (!_items.value) {
-       console.log('null');
+        console.log('null');
         _items.value = []
     }
 
@@ -116,29 +113,41 @@ function loadProject() {
     store.routeId = $route.params.id
     store.currentProjectId = $params.id;
     eventBus.emit('newRoute', $route.params)
-    console.log("project loaded",_items.value );
+    console.log("project loaded", _items.value);
 }
 
 function saveProject() {
     ToDoService.saveProject($params.id, _items.value)
     console.log("saved");
 }
+
+
+function deleteProject() {
+    $modal.show("deleteProject").then(() => {
+        // delete project
+        ToDoService.deleteProject($params.id)
+        eventBus.emit("UpdateProjects")
+        $router.push({ name: "landing" })
+    }, () => { })
+}
+
 </script>
 
 <template>
     <div class="project-container">
 
-<div class="">{{ _project_name }}</div>
+                <!-- Project name -->
+                <div class="header-container">
+            <h1>{{_project_name}}</h1>
+            <button @click="deleteProject()">Delete project</button>
+        </div>
 
         <!-- Summary -->
         <Summary :items="_items" />
 
-        
-        {{ console.log(_filter) }}
-
         <!-- Filter bar -->
         <div class="w3-margin-bottom">
-            <ToDoFilter class="mt-20"  v-model="_filter"></ToDoFilter>
+            <ToDoFilter class="mt-20" v-model="_filter"></ToDoFilter>
         </div>
 
         <!-- Todo list -->
@@ -169,7 +178,11 @@ function saveProject() {
                 This action cannot be undone.
             </p>
         </Modal>
-        <Promise></Promise>
+      
+        <Modal name="deleteProject" title="Delete the Project">
+            <h3>Attention</h3>
+            <p class="w3-pale-red w3-text-red w3-padding">This action cannot be undone. Please confirm.</p>
+        </Modal>
     </div>
 </template>
 
@@ -178,6 +191,6 @@ function saveProject() {
     max-width: 56rem;
     padding: 1rem;
     margin: 0 auto;
-    
+
 }
 </style>

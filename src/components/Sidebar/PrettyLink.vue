@@ -13,6 +13,10 @@ const $props = defineProps({
     items: {
         type: Array,
         required: false
+    },
+    cssElement: {
+        type: Object,
+        required: false
     }
 }
 )
@@ -21,11 +25,11 @@ const $props = defineProps({
 
 <template>
     <div>
-        <router-link :to="$props.to" class="button4" active-class="active-link">
+        <router-link :to="$props.to" class="green" active-class="active-link">
             <span class="actual-text4">&nbsp;
                 <slot />&nbsp;
             </span>
-            <span aria-hidden="true" class="hover-text4">&nbsp;
+            <span aria-hidden="true" class="hover-text">&nbsp;
                 <slot />&nbsp;
             </span>
         </router-link>
@@ -42,7 +46,7 @@ const $props = defineProps({
 </template>
 
 <style>
-a.button4 {
+a.green {
     display: flex;
     margin: 0;
     height: auto;
@@ -56,7 +60,7 @@ a.button4 {
 }
 
 /* button styling */
-a.button4 {
+a.green {
     --border-right: 6px;
     --text-stroke-color: rgba(255, 255, 255, 0.6);
     --animation-color: #37FF8B;
@@ -71,7 +75,7 @@ a.button4 {
 }
 
 /* this is the text, when you hover on button */
-.hover-text4 {
+.hover-text {
     position: absolute;
     box-sizing: border-box;
     content: attr(data-text);
@@ -86,7 +90,7 @@ a.button4 {
 }
 
 /* hover */
-a.button4:hover .hover-text4 {
+a.green:hover .hover-text {
     width: 100%;
     transition: width 0.5s ease-in-out 0.1s;
     filter: drop-shadow(0 0 23px var(--animation-color));
@@ -94,7 +98,7 @@ a.button4:hover .hover-text4 {
 }
 
 
-.active-link .hover-text4 {
+.active-link .hover-text {
 
     width: 100%;
     filter: drop-shadow(0 0 7px var(--animation-color));
