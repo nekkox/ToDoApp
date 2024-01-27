@@ -8,7 +8,7 @@ const service = {
     };
   },
 
-  getNewItem(value) {
+  getNewItem(value, description) {
     return {
       id: new Date().valueOf(),
       text: value,
@@ -64,15 +64,16 @@ const service = {
     localStorage.setItem("projects", JSON.stringify(projects));
   },
 
-  createToDoProject(name = "") {
+  createToDoProject(name = "", description="") {
     let projects = service.loadProjectsMain();
 
      // Prepare the new project
     let project_id = projects.next_id;
+    
 
     // Update the projects manifest
     projects.next_id++;
-    projects.list.push({ id: project_id, name });
+    projects.list.push({ id: project_id, name,description });
 
     // Create project entry in local storage
     localStorage.setItem(`project.${project_id}`, "[]");
@@ -122,7 +123,6 @@ const service = {
   deleteProject(project_id){
         // Retrieve the manifes, and the index of the project in the list
         let mainProject=service.loadProjectsMain()
-        console.log(mainProject);
         let project_index=mainProject.list.findIndex(p=>{
                 return p.id==project_id
             })

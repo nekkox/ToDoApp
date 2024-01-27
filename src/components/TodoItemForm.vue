@@ -39,6 +39,7 @@ function checkIfEmpty() {
             <input class="w3-input w3-border" type="text" v-model="$props.modelValue.text" @input="checkIfEmpty"
                 @focus="checkIfEmpty" @blur="checkIfEmpty">
 
+
             <div v-if="_item.text != ''">
                 <p>Value to edit: {{ _item.text }}</p>
                 <p v-if="$props.emptyValue">Your value: <span class="w3-text-red">Cant be empty</span></p>

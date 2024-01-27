@@ -11,6 +11,7 @@ const slotP = ref()
 const $modal = inject("$modals")
 const _projectName = ref("")
 const $router = useRouter()
+const _description = ref("")
 //Create new project in localstorage if 
 function newProject() {
     _projectName.value = ""
@@ -19,7 +20,7 @@ function newProject() {
         .then(() => {
             //max 10 signs
             if (_projectName.value != '' && _projectName.value.length <= 10) {
-                ToDoService.createToDoProject(_projectName.value)
+                ToDoService.createToDoProject(_projectName.value, _description.value)
                 eventBus.emit("UpdateProjects")
                 //get the last created project
                 console.log("New Project Created")
@@ -27,6 +28,10 @@ function newProject() {
                 go(createdProjectId)
 
             }
+
+
+
+
         },
             () => {
                 return console.log("Creating new project cancelled")
@@ -64,9 +69,11 @@ function go(id) {
         <!-- Modal -->
         <Modal name="NewProject" title="New To-Do Project">
             <strong>Name</strong>
-            <input type="text" class="w3-input w3-border" placeholder="Enter project name..." v-model="_projectName">
+            <input type="text" class="w3-input w3-border mb-2" placeholder="Enter project name..." v-model="_projectName">
+            <input type="text" class="w3-input w3-border" placeholder="Enter description..." v-model="_description">
         </Modal>
         <p>{{ _projectName }}</p>
+        <p>{{ _description }}</p>
 
         <button @click="go(2)" class="button" data-text="Awesome">
             <span class="actual-text">BBB</span>

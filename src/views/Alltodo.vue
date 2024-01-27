@@ -57,12 +57,21 @@ UpdateProjects()
             All To Do
         </h1>
 
-        <div v-for="project in _projects" :key="project.id" >
-              <router-link :to="{ name: 'project', params: { id: project.id } }">
-{{ project.name }}
 
+<div v-for="project in _projects" :key="project.id" class="mb-5 block max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+    <router-link :to="{ name: 'project', params: { id: project.id } }">
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ project.name }}</h5>
+<p class="font-normal text-gray-700 dark:text-gray-400">{{ project.description }}</p>
               </router-link>
-          </div>
+
+
+</div>
+
+
+
+
+
+
 
 
 
