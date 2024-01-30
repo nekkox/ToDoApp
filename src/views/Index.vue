@@ -41,9 +41,9 @@ function go(id) {
 const _projects = ref([])
 
 function UpdateProjects() {
-     let projects = ToDoServie.loadProjectsMain()
-     _projects.value = projects.list
-     console.log("changed");
+    let projects = ToDoServie.loadProjectsMain()
+    _projects.value = projects.list
+    console.log("changed");
 
 }
 
@@ -57,15 +57,16 @@ UpdateProjects()
             All To Do
         </h1>
 
+        <div class="overflow-x-auto px-14" style="height: 600px;">
+            <div v-for="project in _projects" :key="project.id"
+                class="mb-5 block max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 ">
+                <router-link :to="{ name: 'project', params: { id: project.id } }">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ project.name }}</h5>
+                    <p class="font-normal text-gray-700 dark:text-gray-400">{{ project.description }}</p>
+                </router-link>
 
-<div v-for="project in _projects" :key="project.id" class="mb-5 block max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-    <router-link :to="{ name: 'project', params: { id: project.id } }">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ project.name }}</h5>
-<p class="font-normal text-gray-700 dark:text-gray-400">{{ project.description }}</p>
-              </router-link>
-
-
-</div>
+            </div>
+        </div>
 
 
 
@@ -84,5 +85,8 @@ UpdateProjects()
     margin: 0 auto;
     min-width: 40rem;
     max-width: 60rem;
+    min-height: calc(100vh - 40px);
+    max-height: calc(100vh - 40px);
+
 }
 </style>

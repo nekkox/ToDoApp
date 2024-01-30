@@ -8,6 +8,7 @@ import Summary from '@/components/Summary.vue'
 import { useRouter, useRoute } from "vue-router"
 import eventBus from '@/services/eventBus'
 import { store } from '@/services/store'
+import Button from '@/components/Button.vue'
 //url params ('id')
 const $params = defineProps(['id'])
 const $route = useRoute()
@@ -137,9 +138,9 @@ function deleteProject() {
     <div class="project-container">
 
                 <!-- Project name -->
-                <div class="header-container">
-            <h1>{{_project_name}}</h1>
-            <button @click="deleteProject()">Delete project</button>
+                <div class="header-container mt-10 mb-10">
+            
+                    <p class="text-4xl text-gray-900 dark:text-white"> {{_project_name}}</p>
         </div>
 
         <!-- Summary -->
@@ -152,13 +153,13 @@ function deleteProject() {
 
         <!-- Todo list -->
         <ToDoList v-model="_items" :filter="_filter" @toggle="toggleStatus" @edit="showModal(false, $event)"
-            @delete="deleteItem">
+            @delete="deleteItem" class="mb-10">
             <button @click="showModal(true)" class="w3-button w3-blue w3-round-xxlarge">
                 <i class="fa-solid fa-square-plus"></i>
                 New item
             </button>
         </ToDoList>
-
+        <Button @click="deleteProject()">Delete project</Button>
         <!-- Modal for New item or for Edit -->
         <Modal name="New_or_Edit_Item" title="To Do Item" :disabled="emptyValue">
             <template v-slot:newItem>

@@ -57,17 +57,20 @@ function go(id) {
      $router.push({ name: 'project', params: { id: id } });
 }
 
+
 </script>
 
 <template>
      <section
           class="w-48 text-sm font-medium text-gray-900 bg-white border-x border-zinc-700 rounded-b-lg dark:bg-gray-700 dark:border-zinc-700 dark:text-white">
 
-        <!--  <router-link :to="{ name: 'landing' }" class="m-4 text-center" active-class="home"> New </router-link> -->
-      <PrettyLink :to="{ name: 'home' }" class="mt-9"> Home </PrettyLink>
-      <PrettyLink :to="{ name: 'landing' }" style="font-size:0.8em"> New todo </PrettyLink>
-      <PrettyLink :to="{ name: 'alltodo' }" class="mt-7" style="font-size:0.7em"> All todo's </PrettyLink>
-
+          <!--  <router-link :to="{ name: 'landing' }" class="m-4 text-center" active-class="home"> New </router-link> -->
+          <PrettyLink :to="{ name: 'home' }" class="mt-9"> Home </PrettyLink>
+          <PrettyLink :to="{ name: 'landing' }" style="font-size:0.8em"> New </PrettyLink>
+          
+          <PrettyLink :to="{ name: 'index' }" class="mt-7" style="font-size:0.7em"> All</PrettyLink>
+     
+          <!--
           <div v-for="project in _projects" :key="project.id" class="pt-2 pb-2 mt-2 mb-2 ">
                <PrettyLink :to="{ name: 'project', params: { id: project.id } }" :items="['a', 'b', 'c']">
                     {{ project.name }}
@@ -76,6 +79,16 @@ function go(id) {
                     </template>
                </PrettyLink>
           </div>
+-->
+<div id="xxx">
+          <PrettyLink :to="{ name: 'index' }" :projects="_projects" >
+               All
+               <template #link-list="SlotProps">
+                    {{ SlotProps.item.name }}
+               </template>
+          </PrettyLink>
+     </div>
+{{ console.log(link) }}
 
      </section>
 </template>
@@ -87,5 +100,4 @@ section {
 .home {
      background-color: aqua;
 }
-
 </style>
